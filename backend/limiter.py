@@ -3,7 +3,7 @@ import redis
 from fastapi import HTTPException
 from datetime import datetime
 
-r = redis.Redis(host=os.getenv("REDIS_HOST"), port=os.getenv("REDIS_PORT"), db=0, decode_responses=True)
+r = redis.Redis(host=os.getenv("REDIS_HOST"), port=int(os.getenv("REDIS_PORT")), db=0, decode_responses=True)
 
 DAILY_LIMITS = {
     "uploads": int(os.getenv("UPLOAD_LIMIT", 3)),
