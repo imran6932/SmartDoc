@@ -1,0 +1,8 @@
+.venv
+__pycache__
+*.pyc
+*.pyo
+uploads/
+vector_stores/
+.env
+*.log
