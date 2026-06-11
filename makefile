@@ -108,8 +108,8 @@ smartdoc-react-clean:
 
 cmds:
 	@echo "Available commands:"
-	@echo "  make smartdocreact-build - to build the smartdocreact app"
-	@echo "  make smartdocreact-clean - to clear the smartdocreact app node_modules"
+	@echo "  make smartdoc-react-build - to build the smartdocreact app"
+	@echo "  make smartdoc-react-clean - to clear the smartdocreact app node_modules"
 	@echo "  make docker-compose-restart - to restart the docker compose"
 	@echo "  make docker-compose-build - to build the docker compose"
 	@echo "  make docker-compose-up - to start the docker compose"
