@@ -2,10 +2,20 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import upload, chat
 from dotenv import load_dotenv
+from services.embedder import cleanup_old_sessions
+from contextlib import asynccontextmanager
 
 load_dotenv()
 
-app = FastAPI(title="SmartDoc API")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    cleanup_old_sessions(max_age_hours=24)
+    yield
+
+
+app = FastAPI(title="SmartDoc API", lifespan=lifespan)
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -17,6 +27,7 @@ app.add_middleware(
 
 app.include_router(upload.router, prefix="/api")
 app.include_router(chat.router, prefix="/api")
+
 
 @app.get("/")
 def root():

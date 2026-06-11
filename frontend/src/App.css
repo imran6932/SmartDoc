@@ -1,4 +1,8 @@
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -17,8 +21,14 @@ header {
   margin-bottom: 2rem;
 }
 
-header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
-header p { color: #666; }
+header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+header p {
+  color: #666;
+}
 
 .uploader {
   display: flex;
@@ -35,12 +45,34 @@ header p { color: #666; }
   max-width: 500px;
 }
 
-.upload-icon { font-size: 3rem; }
-.upload-box p { margin: 1rem 0; color: #666; }
-.filename { color: #333; font-weight: 500; }
-.error { color: red; font-size: 0.9rem; }
+.upload-icon {
+  font-size: 3rem;
+}
 
-input[type="file"] { margin: 1rem 0; }
+.upload-box p {
+  margin: 1rem 0;
+  color: #666;
+}
+
+.upload-box p.error {
+  color: #dc2626;
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+}
+
+.filename {
+  color: #333;
+  font-weight: 500;
+}
+
+.error {
+  color: red;
+  font-size: 0.9rem;
+}
+
+input[type="file"] {
+  margin: 1rem 0;
+}
 
 button {
   background: #2563eb;
@@ -53,14 +85,20 @@ button {
   margin-top: 0.5rem;
 }
 
-button:disabled { background: #93c5fd; cursor: not-allowed; }
-button:hover:not(:disabled) { background: #1d4ed8; }
+button:disabled {
+  background: #93c5fd;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  background: #1d4ed8;
+}
 
 .chatbox {
   background: white;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   height: 75vh;
@@ -92,9 +130,17 @@ button:hover:not(:disabled) { background: #1d4ed8; }
   gap: 1rem;
 }
 
-.message { display: flex; }
-.message.user { justify-content: flex-end; }
-.message.ai { justify-content: flex-start; }
+.message {
+  display: flex;
+}
+
+.message.user {
+  justify-content: flex-end;
+}
+
+.message.ai {
+  justify-content: flex-start;
+}
 
 .bubble {
   max-width: 70%;
@@ -102,12 +148,25 @@ button:hover:not(:disabled) { background: #1d4ed8; }
   border-radius: 12px;
   line-height: 1.5;
   white-space: pre-wrap;
-  text-align:justify;
+  text-align: justify;
 }
 
-.message.user .bubble { background: #2563eb; color: white; border-radius: 12px 12px 2px 12px; }
-.message.ai .bubble { background: #f1f5f9; color: #333; border-radius: 12px 12px 12px 2px; }
-.typing { color: #999; font-style: italic; }
+.message.user .bubble {
+  background: #2563eb;
+  color: white;
+  border-radius: 12px 12px 2px 12px;
+}
+
+.message.ai .bubble {
+  background: #f1f5f9;
+  color: #333;
+  border-radius: 12px 12px 12px 2px;
+}
+
+.typing {
+  color: #999;
+  font-style: italic;
+}
 
 .input-row {
   padding: 1rem;
@@ -127,5 +186,97 @@ button:hover:not(:disabled) { background: #1d4ed8; }
   font-family: inherit;
 }
 
-.input-row textarea:focus { outline: none; border-color: #2563eb; }
-.input-row button { margin: 0; padding: 0.75rem 1.25rem; }
+.input-row textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.input-row button {
+  margin: 0;
+  padding: 0.75rem 1.25rem;
+}
+
+/* ── Markdown base styles for all bubbles ── */
+.bubble h1,
+.bubble h2,
+.bubble h3 {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.bubble p {
+  margin: 0.4rem 0;
+  line-height: 1.6;
+  white-space: normal;
+}
+
+.bubble ul,
+.bubble ol {
+  margin: 0.4rem 0;
+  padding-left: 1.25rem;
+  white-space: normal;
+}
+
+.bubble li {
+  margin-bottom: 0.3rem;
+  line-height: 1.5;
+}
+
+.bubble strong {
+  font-weight: 600;
+}
+
+.bubble code {
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+/* ── AI bubble markdown — dark text ── */
+.message.ai .bubble {
+  color: #333;
+}
+
+.message.ai .bubble h1,
+.message.ai .bubble h2,
+.message.ai .bubble h3 {
+  color: #111;
+}
+
+.message.ai .bubble strong {
+  color: #111;
+}
+
+.message.ai .bubble code {
+  background: rgba(0, 0, 0, 0.08);
+  color: #333;
+}
+
+.message.ai .bubble a {
+  color: #2563eb;
+}
+
+/* ── User bubble markdown — white text ── */
+.message.user .bubble {
+  color: white;
+}
+
+.message.user .bubble h1,
+.message.user .bubble h2,
+.message.user .bubble h3 {
+  color: white;
+}
+
+.message.user .bubble strong {
+  color: white;
+}
+
+.message.user .bubble code {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.message.user .bubble a {
+  color: #bfdbfe;
+}

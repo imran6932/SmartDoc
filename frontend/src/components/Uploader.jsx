@@ -20,7 +20,11 @@ function Uploader({ onUpload }) {
       const res = await axios.post(`${API_URL}/api/upload`, formData)
       onUpload(res.data.session_id, res.data.filename)
     } catch (err) {
-      setError(err.response?.data?.detail || "Upload failed. Please try again.")
+      const errorMsg = err.response?.data?.detail
+        || err.message
+        || "Something went wrong. Please try again."
+
+      setError(`⚠️ ${errorMsg}`)
     } finally {
       setLoading(false)
     }

@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react"
+import ReactMarkdown from "react-markdown"
 import axios from "axios"
 
 const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000"
@@ -9,6 +10,7 @@ function ChatBox({ sessionId, filename, onReset }) {
   ])
   const [question, setQuestion] = useState("")
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
   const bottomRef = useRef(null)
 
   useEffect(() => {
@@ -30,10 +32,11 @@ function ChatBox({ sessionId, filename, onReset }) {
       })
       setMessages(prev => [...prev, { role: "ai", text: res.data.answer }])
     } catch (err) {
-      setMessages(prev => [...prev, {
-        role: "ai",
-        text: "Sorry, something went wrong. Please try again."
-      }])
+      const errorMsg = err.response?.data?.detail
+        || err.message
+        || "Something went wrong. Please try again."
+
+      setError(`⚠️ ${errorMsg}`)
     } finally {
       setLoading(false)
     }
@@ -56,7 +59,7 @@ function ChatBox({ sessionId, filename, onReset }) {
       <div className="messages">
         {messages.map((msg, i) => (
           <div key={i} className={`message ${msg.role}`}>
-            <span className="bubble">{msg.text}</span>
+            <span className="bubble"><ReactMarkdown>{msg.text}</ReactMarkdown></span>
           </div>
         ))}
         {loading && (
@@ -79,6 +82,7 @@ function ChatBox({ sessionId, filename, onReset }) {
           Send
         </button>
       </div>
+        {error && <p className="error">{error}</p>}
     </div>
   )
 }

@@ -1,9 +1,10 @@
 import os
 import uuid
 import shutil
-from fastapi import APIRouter, UploadFile, File, HTTPException
+from fastapi import APIRouter, UploadFile, File, HTTPException, Request
 from services.extractor import extract_text
 from services.embedder import create_vector_store
+from limiter import check_limit
 
 router = APIRouter()
 
@@ -12,15 +13,27 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 ALLOWED_EXTENSIONS = {".pdf", ".docx", ".txt"}
 
+MAX_FILE_SIZE = 2 * 1024 * 1024  # 2MB in bytes
+
 
 @router.post("/upload")
-async def upload_file(file: UploadFile = File(...)):
+async def upload_file(request: Request, file: UploadFile = File(...)):
+    check_limit(request.client.host, "uploads")
+    
     # Validate file type
     ext = os.path.splitext(file.filename)[1].lower()
     if ext not in ALLOWED_EXTENSIONS:
         raise HTTPException(
             status_code=400, detail=f"Unsupported file type. Allowed: PDF, DOCX, TXT"
         )
+
+    # Validate file size
+    contents = await file.read()
+    if len(contents) > MAX_FILE_SIZE:
+        raise HTTPException(status_code=413, detail="File size exceeds 2MB limit.")
+
+    # Reset file pointer after reading
+    await file.seek(0)
 
     # Generate unique session id
     session_id = str(uuid.uuid4())
