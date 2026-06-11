@@ -100,10 +100,10 @@ docker-compose-restart: install-frontend-requirements smartdoc-react-build docke
 	@echo "Docker compose restarted."
 
 smartdoc-react-build:
-	@cd /home/Projects/SmartDoc/frontend && yarn install && yarn run build
+	@cd /home/SmartDoc/frontend && yarn install && yarn run build
 
 smartdoc-react-clean:
-	@cd /home/Projects/SmartDoc/frontend && sudo rm -rf node_modules
+	@cd /home/SmartDoc/frontend && sudo rm -rf node_modules
 
 
 cmds:
