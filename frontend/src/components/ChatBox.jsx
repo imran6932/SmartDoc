@@ -17,6 +17,19 @@ function ChatBox({ sessionId, filename, onReset }) {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
 
+  const clearSession = async () => {
+  try {
+    await axios.post(`${API_URL}/api/clear`, { session_id: sessionId })
+    setMessages([
+      { role: "ai", text: `Document **"${filename}"** loaded. Ask me anything about it!` }
+    ])
+  } catch (err) {
+    console.error("Clear session failed", err)
+  } finally {
+    onReset()
+  }
+}
+
   const sendMessage = async () => {
     if (!question.trim() || loading) return
 
@@ -53,7 +66,7 @@ function ChatBox({ sessionId, filename, onReset }) {
     <div className="chatbox">
       <div className="chat-header">
         <span>📄 {filename}</span>
-        <button className="reset-btn" onClick={onReset}>Upload New</button>
+        <button className="reset-btn" onClick={clearSession}>Clear Chat</button>
       </div>
 
       <div className="messages">
